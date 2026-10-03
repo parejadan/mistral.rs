@@ -10,6 +10,7 @@ const CUTLASS_COMMIT_ENV: &str = "MISTRALRS_CUTLASS_COMMIT";
 const CUDA_BUILD_ROOT_ENV: &str = "MISTRALRS_CUDA_BUILD_ROOT";
 #[cfg(feature = "cuda")]
 const SUPPORTED_CUDA_TOOLKIT_VERSIONS: &[(usize, usize)] = &[
+    (13, 4),
     (13, 3),
     (13, 2),
     (13, 1),
@@ -104,6 +105,11 @@ fn cuda_version_from_build_system() -> (usize, usize) {
         panic!("Unsupported cuda toolkit version from `nvcc --version`:\n{stdout}")
     });
     if SUPPORTED_CUDA_TOOLKIT_VERSIONS.contains(&(major, minor)) {
+        (major, minor)
+    } else if major >= 13 {
+        println!(
+            "cargo:warning=CUDA toolkit version `{major}.{minor}` is newer than supported list; proceeding using CUDA 13.x compatibility mode."
+        );
         (major, minor)
     } else {
         panic!("Unsupported cuda toolkit version: `{major}.{minor}`. Please raise a github issue.")

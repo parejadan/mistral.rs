@@ -1128,7 +1128,7 @@ fn validate_and_order_splits(shards: &mut [ParsedShard]) -> Result<()> {
                 shard.path.display()
             ))
         })?;
-        
+
         // BYPASS: Single-file monolithic models sometimes incorrectly specify `split.count` = 0.
         // We override count to 1 so the shard loader doesn't crash on these valid 15GB models.
         if count == 0 {

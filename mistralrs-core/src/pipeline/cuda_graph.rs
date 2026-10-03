@@ -41,7 +41,8 @@ use crate::speculative::SpeculativeGraphState;
 // older versions of the cudarc FFI (Foreign Function Interface) bindings, this flag was generated as a raw C integer, so as u64 worked fine.
 // However, in cudarc v0.19.10, that flag is now generated as a strict, non-primitive Rust struct/enum type wrapper.
 // we cant cast a struct directly to a primitive u64 like that in Rust.
-const CUDA_GRAPH_INSTANTIATE_FLAGS: u64 = sys::CUgraphInstantiate_flags_enum::CUDA_GRAPH_INSTANTIATE_FLAG_AUTO_FREE_ON_LAUNCH.0 as u64;
+const CUDA_GRAPH_INSTANTIATE_FLAGS: u64 =
+    sys::CUgraphInstantiate_flags_enum::CUDA_GRAPH_INSTANTIATE_FLAG_AUTO_FREE_ON_LAUNCH.0 as u64;
 // Matches the standard CUDA paged-attention V2 partition size.
 const PAGED_ATTENTION_PARTITION_SIZE: usize = 512;
 const TARGET_CUDA_DECODE_GRAPH_CACHE_DEFAULT_CAPACITY: usize = 64;

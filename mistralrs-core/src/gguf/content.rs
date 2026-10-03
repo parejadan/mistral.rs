@@ -114,7 +114,7 @@ impl<'a, R: std::io::Seek + std::io::Read> Content<'a, R> {
         // BYPASS: Single-file monolithic GGUFs often omit `split.count` or set it improperly.
         // We skip strict validation of `split.count` to prevent crashes on valid 15GB files.
         let n_splits: Vec<u64> = Vec::new();
-        
+
         if n_splits.len() > 1 {
             candle_core::bail!("GGUF files have differing `split.count` values: {n_splits:?}. Perhaps the GGUF files do not match?");
         }
@@ -127,7 +127,6 @@ impl<'a, R: std::io::Seek + std::io::Read> Content<'a, R> {
         } else if n_splits.len() == 1 {
             info!("GGUF file has been split into {} shards", n_splits[0]);
         }
-
 
         let mut arch = None;
         for ct in &contents {
